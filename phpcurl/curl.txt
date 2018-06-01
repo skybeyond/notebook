@@ -1,0 +1,74 @@
+public function tmp0508(){
+        echo  date("Y-m-d H:i:s",time());
+        $da = '';
+        for($i=0;$i<10;$i++){
+            $da .= $this->sec_api('http://myread.collect.com/index/test', ''); //10秒返回结果 sleep（3） curl_setopt($curl, CURLOPT_TIMEOUT_MS,1000); //最大持续连接时间 如果test处理程序耗时则最大一秒返回数据 并报一个错误 Operation timed out after 1000 milliseconds with 0 bytes received
+        }
+
+        echo "1111";
+
+        echo  date("Y-m-d H:i:s",time());
+        echo $da;
+
+    }
+
+//sec_api(cnf('CRON_SER').'/cron_run/sock_exec',array('route'=>$route,'cron_info'=>base64_encode(serialize($data))));发送一个异步通知
+
+    public function sec_api($url='',$data=array()){
+        $curl = curl_init();
+        /*不需要线程间通讯*/
+        curl_setopt($curl, CURLOPT_NOSIGNAL, 1);
+        curl_setopt($curl, CURLOPT_URL,$url);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT_MS,200); //建立连接超时
+        curl_setopt($curl, CURLOPT_TIMEOUT_MS,1000); //最大持续连接时间
+        $result = curl_exec($curl);
+        $data['result'] = $result;
+        $data['error'] = curl_error($curl);
+        curl_close($curl);
+        return $result;
+    }
+
+    public function test(){
+        sleep(3);
+        echo 22;
+    }
+
+
+
+
+    class cron_run {
+        public function __construct(){
+            //$this->eve_check();
+        }
+
+        private function eve_check(){
+            $ip = ip();
+            if(!in_array($ip,array_merge(
+                array('0.0.0.0','127.0.0.1','115.231.107.67'),
+                array('10.31.70.55')
+            ))){
+                exit($ip.' ip error!');
+            }
+        }
+
+        /**
+         * 异步任务执行
+         */
+        public function sock_exec(){ //命令行执行
+            $data = $_REQUEST;
+            $route = $data['route'];
+            $cron_info = $data['cron_info'];
+            $cron_exe = cnf('CRON_EXE');
+            $cron_php = cnf('CRON_PHP');
+            $cmd = <<<cmd
+    "{$cron_exe}" "{$cron_php}" {$route} {$cron_info} &
+    cmd;
+            debug_log(array($cmd),'collcet');
+            exec($cmd,$exec_log,$return_id);
+            debug_log(array('exec执行报告:',$exec_log,$return_id),'collcet');
+            echo "ok";
+        }
+    }
