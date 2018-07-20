@@ -23,7 +23,7 @@ public function tmp0508(){
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT_MS,200); //建立连接超时
-        curl_setopt($curl, CURLOPT_TIMEOUT_MS,1000); //最大持续连接时间
+        curl_setopt($curl, CURLOPT_TIMEOUT_MS,1000); //最大持续连接时间 500
         $result = curl_exec($curl);
         $data['result'] = $result;
         $data['error'] = curl_error($curl);
