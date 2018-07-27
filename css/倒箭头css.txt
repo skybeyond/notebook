@@ -1,0 +1,21 @@
+.pick-select{
+	font-size: 28rpx;
+	position: relative;
+}
+/*css»­¼ýÍ·*/
+.pick-select:before {
+	content: " ";
+	display: inline-block;
+	height: 6px;
+	width: 6px;
+	border-width: 0px 2px 2px 0px;
+	border-color: #000;
+	border-style: solid;
+	-webkit-transform: matrix(.71,.71,-.71,.71,0,0);
+	transform: matrix(.71,.71,-.71,.71,0,0);
+	top: -2px;
+	position: absolute;
+	top: 50%;
+	right: 15px;
+	margin-top: -4px
+}
