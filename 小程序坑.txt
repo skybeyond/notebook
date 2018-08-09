@@ -1,0 +1,5 @@
+1.时间戳计算得时候 iPhone只能识别  2017/3/14 10:03:45
+var resData = '2017-3-14 10:03:45';
+resData=resData..replace(/-/g, '/');
+console.log("返回时间：" + resData);
+var time = Date.parse(new Date(resData)) / 1000;
