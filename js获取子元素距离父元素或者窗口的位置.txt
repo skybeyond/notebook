@@ -1,0 +1,18 @@
+position().top
+是相对定位父元素的
+offset().top
+是相对视窗的
+
+<ul style="position: relative"> <li></li>
+  <li></li>
+  <li id="flag"></li>
+  <li></li>
+</ul>
+<script>
+  $(function(){
+    var flag=$("#flag");
+    alert(flag.position().top);//距离UI的上边距 50
+    alert(flag.position().top+flag.height());//得到75，需加上自身高度
+  });
+ 
+</script>
