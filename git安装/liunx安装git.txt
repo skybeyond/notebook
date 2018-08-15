@@ -1,0 +1,32 @@
+方式一：yum 
+yum -y install git
+但是yum源中安装的git版本是1.7.1，而是下载git源码编译安装。
+
+
+方式二：源码编译(主要看这里)
+1. 安装依赖的包
+yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker
+
+2. 下载git源码并解压
+https://www.kernel.org/pub/software/scm/git/
+
+tar -zxvf  git-2.9.0.tar.gz
+cd  git-2.9.0
+
+./configure --prefix=/usr/local/git/
+编译并且安装
+make 
+make install
+
+3.添加环境变量
+vim /etc/profile
+
+然后在文件的最后一行，添加下面的内容，然后保存退出。
+
+export PATH=/usr/local/git/bin:$PATH
+
+4.不想重启系统，使用source命令立即生效
+
+source /etc/profile
+
+5.git--version
