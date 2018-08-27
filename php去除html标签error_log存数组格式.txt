@@ -1,0 +1,2 @@
+error_log(var_export($arr,true)."\n\n\n",3,"request.log");
+strip_tags£¨£©//È¥³ýhtml±êÇ©
